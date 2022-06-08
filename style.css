@@ -446,7 +446,11 @@ nav.navbar {
       background-repeat: no-repeat;
       
     }
-
+    img {
+      max-width: 100%;
+      max-height: 100%;
+     }
+     
 
 /*--------------------------------------------------------------
 # Footer
