@@ -311,7 +311,7 @@ border: none;
 
 
 .ftco-navbar-light.scrolled {
-  position: fixed;
+  
   right: 0;
   left: 0;
   top: 0;
@@ -325,7 +325,6 @@ border: none;
 
 nav.navbar.shrink {
   min-height: 200px;
-  position: fixed;
   width: 100%
 }
 
@@ -503,4 +502,3 @@ nav.navbar {
   color: #0000ff;
   text-align: left;
 }
-
