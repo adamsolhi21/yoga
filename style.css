@@ -183,6 +183,13 @@ ul li a {
   text-decoration: none;
 }
 
+.bi bi-arrow-up-short{
+  color: #ffffff;
+}
+
+bi bi-arrow-up-short{
+  color: #ffffff;
+}
 svg {
 width: 30;
 height: 30;
