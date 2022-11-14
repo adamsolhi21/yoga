@@ -466,10 +466,8 @@ nav.navbar {
       background-repeat: no-repeat;
       
     }
-    img {
-      max-width: 100%;
-      max-height: 100%;
-     }
+  }
+   
      
 
 /*--------------------------------------------------------------
@@ -522,4 +520,27 @@ nav.navbar {
   font-weight: 400;
   color: #0000ff;
   text-align: left;
+}
+
+.copy {
+  text-align: justify;
+  align-items: center;
+
+}
+.yap {
+float:right;
+align-items: right;
+
+}
+
+@media (min-width: 675px) {
+  #yap {
+    justify-content: space-between;
+    align-items: right;
+    height: 10px;
+  }
+}
+
+#about {
+  justify-content: space-between;
 }
