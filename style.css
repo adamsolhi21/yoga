@@ -4,8 +4,9 @@ body {
   color: #444444;
 }
 
-
-
+.border {
+  display: none;
+}
 
   .text {
     animation: fadeIn 15s;
@@ -40,12 +41,19 @@ body {
     100% {opacity:1;}
   }
 
+}
+
 .bi-arrow-up-short {
   color: #ffffff;
 }
 a {
-  color: #efebe3;
+  color: #ffb727;
   text-decoration: none;
+}
+
+div a {
+  text-decoration: none;
+  color: #000;
 }
 
 div a :hover {
@@ -66,6 +74,10 @@ h4 {
 
 }
 
+h5 {
+  color: #ffc85a;
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -80,47 +92,9 @@ h4 {
 }
 
 
-.navbar-toggler.collapsed:focus {
-  outline: none;
-    border-radius:  100%;
-    border-color: #ffffff;
-    box-shadow: none;
-    outline-color: #fff;
-    outline: #efebe3;
-    
-}
-
-
-button.navbar-toggler:active {
-  color:#ffffff;
-  outline: none;
-    border-radius:  0%;
-    border-color: #ffffff;
-    outline-color: #fff;
-    box-shadow: none;
-    outline: #efebe3;
-    background-color: #ffffff;
-}
-
-button:focus {
-  background-color: #ffffff;
-  box-shadow: none;
-  -webkit-box-shadow: none!important;
-  box-shadow: none;
-}
-
-button {
-  background-color: #ffffff;
-  box-shadow: none;
-  -webkit-box-shadow: none!important;
-  box-shadow: none;
-}
-
-
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
-
 
 @media (min-width:966px ) {
   .menu {
@@ -187,21 +161,19 @@ ul li:nth-of-type(1n){
 button {
   border-color: #fff;
   border-radius: none;
-  outline: none;
-
 }
 
-button::shadow {
-  border-color: #fff;
-  border-radius: none;
-  outline: none;
-  
+button .navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none!important;
+    box-shadow: none!important;
+    border: none!important;
+    border-radius: none!important;
 }
 
-button:active {
-  border-color: #fff;
-  border-radius: none;
-  outline: none;
+button.navbar-toggler.ml-auto.hidden-sm-up.float-xs-right:focus {
+  outline: none!important;
 }
 
 ul li {
@@ -213,25 +185,21 @@ ul li {
 
 ul li a {
   text-decoration: none;
-   text-decoration: none;
 }
 
 .bi bi-arrow-up-short{
   color: #ffffff;
-  text-decoration: none;
 }
 
 bi bi-arrow-up-short{
   color: #ffffff;
 }
 svg {
-width: 10;
-height: 10;
-
+width: 30;
+height: 30;
 fill: currentcolor;
 border-radius: none;
 border: none;
- text-decoration: none;
 }
 
 @media (min-width: 992px) {
@@ -254,13 +222,8 @@ border: none;
 #backToTop {
   visibility:hidden;
   position: fixed;
-  bottom: 80px;
-  right: -5px;
-  background-color:none;
-  background: none!important;
-  border: none;
-  color: white;
-  
+  bottom: 20px;
+  right: 20px;
   
 }
 
@@ -280,28 +243,36 @@ border: none;
   position:fixed;
  
 }
-
-#backToTop.bi.bi-arrow-up-circle-fill {
-  padding: 0px!important;
-  background: none!important;
-  color:#0a00;
-  visibility:visible;
+.navbar-dark .navbar-toggler {
+  color: rgb(255, 255, 255);
+  border-color: rgb(255, 255, 255);
 }
-
-
 @media (min-width: 992px) {
 .navbar-expand-lg .navbar-toggler {
   display: none;
 }
 }
 
+.navbar-toggler {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: none;
+}
 
+.mobile-nav-toggle {
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+  line-height: 0;
+  transition: 0.5s;
+}
 
 @media (max-width: 991px) {
   .mobile-nav-toggle {
     display: block;
-    border: none;
-    outline: #efebe3;
   }
 
   .navbar ul {
@@ -340,7 +311,7 @@ border: none;
 .navbar-mobile a, .navbar-mobile a:focus {
   padding: 10px 20px;
   font-size: 14px;
-  color: #b9612e;
+  color: #3b434a;
 }
 .navbar-mobile a:hover, .navbar-mobile .active, .navbar-mobile li:hover > a {
   color: #ffb727;
@@ -378,14 +349,14 @@ border: none;
 
 
 nav.navbar.shrink {
-  min-height: 100px;
+  min-height: 200px;
   width: 100%
 }
 
 nav.navbar{
   background-color:#ccc;
   width: 100%;
-  min-height: 180px; 
+  min-height: 250px; 
    -webkit-transition: all 0.4s ease;
    transition: all 0.4s ease;
 }
@@ -394,7 +365,7 @@ nav.navbar{
 nav.navbar {
   background-color: #ccc;
   width: 100%;
-  min-height: 100px;
+  min-height: 150px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
 }
@@ -421,7 +392,7 @@ nav.navbar {
   right: 0;
 }
 #hero .hero-container {
-  position: relative;
+  position: absolute;
   bottom: 0;
   top: 0;
   left: 0;
@@ -434,21 +405,21 @@ nav.navbar {
 }
 #hero h1 {
   margin: 70px 0 10px 0;
-  font-size: 44px;
+  font-size: 64px;
   font-family: "Satisfy", serif;
   color: #fff;
 }
 #hero h2 {
   color: #eee;
-  margin-bottom: 2px;
+  margin-bottom: 50px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
-  
+  text-transform: uppercase;
 }
 #hero .btn-scroll {
   transition: 0.4s;
-  color: rgba(000, 000, 000, 0.6);
+  color: rgba(255, 255, 255, 0.6);
   animation: up-down 1s ease-in-out infinite alternate-reverse both;
 }
 #hero .btn-scroll i {
@@ -497,10 +468,12 @@ nav.navbar {
       object-fit: fill;
       background-position-x: -300px;
       background-repeat: no-repeat;
-      
     }
-  }
-   
+    }
+    img {
+      max-width: 100%;
+      max-height: 100%;
+     }
      
 
 /*--------------------------------------------------------------
@@ -512,9 +485,9 @@ nav.navbar {
   color: #fff;
   font-size: 14px;
   text-align: center;
-  padding:  0;
+  padding: 80px 0;
   position: relative;
-  padding-top: 0px;
+  padding-top: 20px;
 }
 #footer::before {
   content: "";
@@ -529,14 +502,20 @@ nav.navbar {
   position: relative;
 }
 #footer h3 {
- 
+  font-size: 36px;
+  font-weight: 700;
   color: #fff;
   position: relative;
   font-family: "Satisfy", serif;
   padding: 0;
   margin: 0 0 15px 0;
 }
-
+#footer p {
+  font-size: 15;
+  font-style: italic;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
 #footer .copyright {
   margin: 0 0 5px 0;
 }
@@ -549,38 +528,56 @@ nav.navbar {
   text-align: left;
 }
 
-.copy {
-  text-align: justify;
-  align-items: center;
-
-}
-.yap {
-  
-  height: 100px!important;
-  /* margin-left: 100px; */
-  margin-bottom: 10px;
+.wrapper {
+  min-width: 350px;
+  column-count: 2;
+  column-gap: 20px;
+  padding: 30px;
+    letter-spacing: 0x;
 }
 
-/*@media (max-width: 780px) {
-  .yap {
-    margin-left: 100px;
-    justify-content: right;
-    align-items: right;
-    height: 200px;
+@media (max-width: 377px) {
+  .wrapper {
+    
+    column-count: 1;
+    column-gap: 0;
+    padding: 10px;
   }
-}
-*/
-#about {
-  justify-content: space-between;
-}
-a {
-  color: #000!important;
-  text-decoration: none!important;
-  background-color: none!important;
-}
-* {
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; 
-  -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; 
-  outline: none !important;
-} 
+  }
+   
 
+
+p {
+  line-height: 1.6; 
+  line-break: loose;
+  font-family: Helvetica;
+  text-align: justify;
+  margin: 0;
+  font-size: 14px;
+}
+
+.star {
+  float: left;
+  width: 250px;
+  shape-outside: url(https://directory.yogaallianceprofessionals.org/yoga-teacher/celeste-sangster?from=badge);
+  shape-margin:20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 377px) {
+  .star {
+    
+    width: 350px;
+  }
+  }
+/*
+.moon {
+  border-radius: 50%;
+  height: 200px; 
+  width:200px;
+  background-color: #ffffff;
+  float: right;
+  shape-outside: inset(1% round 50%);
+  margin-left: 20px;
+  margin-bottom: 10px;
+} */
