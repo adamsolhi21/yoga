@@ -1,0 +1,694 @@
+openapi: "3.0.3"
+
+info:
+  title: Lovehoney Create OMS Order API
+  description: This API receives an order from the Salesforce OMS which is then posted to a Pub/Sub message queue.<br><br>This API will always return JSON.
+  version: 1.0.0
+
+servers:
+  - url: https://mill.lovehoneyapis.com/omsordercreation/
+    description: Development (develop branch). Uses the BETA database
+  - url: https://forge.lovehoneyapis.com/omsordercreation/
+    description: Development (master branch). Uses the SQLQA17 database
+  - url: https://sit.lovehoneyapis.com/omsordercreation/
+    description: Staging. Uses the SQLUATDW1 database
+  - url: https://pen.lovehoneyapis.com/omsordercreation/
+    description: Staging. Uses the SQLSTAGING16 database
+  - url: https://livelihood.lovehoneyapis.com/omsordercreation/
+    description: Live. Uses the Live database
+  - url: http://localhost:3000/
+    description: local development
+
+tags:
+  - name: Create OMS Order
+    description: Recieves a single order from the Salesforce Order Management System in JSON format.
+
+paths:
+  /orders:
+    post:
+      tags:
+        - Create OMS Order
+      summary: POST JSON packing containing order details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      description: Recieves a single order from the Salesforce Order Management System in JSON format.
+      parameters:
+        - in: header
+          name: x-lh-apikey
+          description: API key
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '202':
+          description: Accepted - single order recieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /version:
+    get:
+      tags:
+        - Check the version
+      description: Provides a version page for the microservice.
+      operationId: version
+      responses:
+        '200':
+          description: Success
+  /health:
+    get:
+      tags:
+        - Check the health
+      description: Provides a health page for the microservice.
+      operationId: health
+      responses:
+        '200':
+          description: Success
+
+components:
+  schemas:
+    Response:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Order recieved
+
+    Order:
+      type: object
+      required:
+        - siteId
+        - id
+        - orderDate
+        - currency
+        - taxation
+        - customer
+        - productLineItems
+        - shippingLineItem
+        - shipment
+        - payments
+        - totals
+
+      properties:
+        siteId:
+          type: string
+          enum: ['lvhn-uk', 'lvhn-ca', 'lvhn-us', 'lvhn-au', 'lvhn-fr', 'lvhn-de', 'lvhn-eu', 'lvhn-nz', 'lvhn-es']
+          example: 'lvhn-us'
+        id:
+          type: string
+          example: 'US8_00003501'
+          maxLength: 50
+        orderDate:
+          type: string
+          format: date-time
+          example: '2020-11-05T15:28:03.199Z'
+        currency:
+          type: string
+          enum: ['GBP', 'USD', 'EUR', 'AUD', 'NZD', 'CAD']
+          example: 'USD'
+        customerLocale:
+          type: string
+          example: 'en_US'
+        taxation:
+          type: string
+          example: 'net'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        productLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductLineItem'
+          example:
+          - proratedPrice: 15.29
+            proratedNetPrice: 15.29
+            grossPrice: 15.29
+            basePrice: 15.29
+            id: 54611
+            shipmentId: 7501
+            taxRate: 0.0
+            position: 1
+            name: Tickle Her Pink Clitoral Stimulating Gel 1.0 fl oz
+            mainProductImage: 'https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/BDPC_S08/on/demandware.static/Sites-lvhn-us-Site/-/default/dwca1c8069/images/noimagelarge.jpg?sw=574&sh=765&sm=cut&fmt=jpeg'
+            quantity: 1
+            gift: false
+
+          - proratedPrice: 19.99
+            proratedNetPrice: 19.99
+            grossPrice: 19.99
+            basePrice: 19.99
+            id: 81724
+            shipmentId: 7501
+            taxRate: 0.0
+            position: 1
+            name: 'Lovehoney Curved Silicone Suction Cup Dildo 6 Inch'
+            mainProductImage: 'https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/BDPC_S08/on/demandware.static/Sites-lvhn-us-Site/-/default/dwca1c8069/images/noimagelarge.jpg?sw=574&sh=765&sm=cut&fmt=jpeg'
+            quantity: 1
+            gift: false
+        giftCertificateLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/GiftCertificateLineItem'
+        shippingLineItem:
+          $ref: '#/components/schemas/ShippingLineItem'
+        shipment:
+          $ref: '#/components/schemas/Shipment'
+        totals:
+          $ref: '#/components/schemas/Totals'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        remotehost:
+          type: string
+          example: '167.172.50.99'
+
+    Customer:
+      type: object
+      required:
+        - name
+        - email
+        - billingAddress
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          example: 'Jason Bourne'
+        email:
+          type: string
+          example: 'jason.bourne@lovehoney.co.uk'
+        billingAddress:
+          $ref: '#/components/schemas/BillingAddress'
+    Totals:
+      type: object
+      properties:
+        merchandizeTotal:
+          allOf:
+          - $ref: '#/components/schemas/CommonTotalProperties'
+        adjustedMerchandizeTotal:
+          allOf:
+          - $ref: '#/components/schemas/CommonTotalProperties'
+        shippingTotal:
+          allOf:
+          - $ref: '#/components/schemas/CommonTotalProperties'
+        adjustedShippingTotal:
+          allOf:
+          - $ref: '#/components/schemas/CommonTotalProperties'
+          required:
+          - netPrice
+          - grossPrice
+          - tax
+        orderTotal:
+          allOf:
+          - $ref: '#/components/schemas/CommonTotalProperties'
+          required:
+          - grossPrice
+          - tax
+    ProductLineItem:
+      allOf:
+      - $ref: '#/components/schemas/CommonLineItem'
+      - type: object
+        required:
+        - grossPrice
+        - basePrice
+        - taxBasis
+        - quantity
+        - proratedPrice
+        - proratedNetPrice
+        - id
+        - taxRate
+        properties:
+          position:
+            type: string
+            example: '1'
+          name:
+            type: string
+            example: 'Tickle Her Pink Clitoral Stimulating Gel 1.0 fl oz'
+          mainProductImage:
+            type: string
+            example: 'https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/BDPC_S08/on/demandware.static/Sites-lvhn-us-Site/-/default/dwca1c8069/images/noimagelarge.jpg?sw=574&sh=765&sm=cut&fmt=jpeg'
+          quantity:
+            type: integer
+            example: 1
+            minimum: 1
+          gift:
+            type: string
+            example: 'false'
+            description: This is a stringified boolean
+          proratedPrice:
+            type: string
+            example: '15.29'
+          proratedNetPrice:
+            type: string
+            example: '15.29'
+          variationModelJSON:
+            type: string
+
+    GiftCertificateLineItem:
+      allOf:
+      - $ref: '#/components/schemas/CommonLineItem'
+      - type: object
+        required:
+          - senderName
+          - recipientEmail
+          - recipientName
+        properties:
+          senderName:
+            type: string
+          recipientEmail:
+            type: string
+          recipientName:
+            type: string
+          message:
+            type: string
+
+    ShippingLineItem:
+      allOf:
+      - $ref: '#/components/schemas/CommonLineItem'
+      type: object
+      properties:
+        id:
+          type: string
+        taxRate:
+          type: string
+
+    Shipment:
+      type: object
+      required:
+        - shippingAddress
+        - totals
+      properties:
+        shippingMethod:
+          type: string
+          example: 'GBP001'
+        shippingAddress:
+          $ref: '#/components/schemas/Address'
+        gift:
+          type: string
+          example: 'false'
+          description: Value is a stringified boolean
+        serviceId:
+          type: integer
+          example: 86
+        serviceLevel:
+          type: integer
+          example: 1
+        freeLimit:
+          type: string
+        safePlace:
+          type: string
+          example: 'Round the back'
+        releaseDate:
+          type: string
+          format: date-time
+        CYDDDate:
+          type: string
+          format: date-time
+          example: '2020-11-05T15:28:03.199Z'
+        localCollect:
+          $ref: '#/components/schemas/LocalCollectDetails'
+        totals:
+          type: object
+          required:
+            - shippingTotal
+          properties:
+            merchandizeTotal:
+              allOf:
+              - $ref: '#/components/schemas/CommonTotalProperties'
+            adjustedMerchandizeTotal:
+              allOf:
+              - $ref: '#/components/schemas/CommonTotalProperties'
+            shippingTotal:
+              allOf:
+              - $ref: '#/components/schemas/CommonTotalProperties'
+              required:
+              - netPrice
+              - grossPrice
+            adjustedShippingTotal:
+              allOf:
+              - $ref: '#/components/schemas/CommonTotalProperties'
+
+    LocalCollectDetails:
+      type: object
+      required:
+      - collectionProvider
+      properties:
+        collectionProvider:
+          type: string
+        collectionName:
+          type: string
+        collectionId:
+          type: string
+          maxLength: 50
+
+    PaymentMethodCreditCard:
+      type: object
+      required:
+        - cardType
+        - cardNumber
+        - cardHolder
+        - cardExpirationMonth
+        - cardExpirationYear
+      properties:
+        cardType:
+          type: string
+          example: 'VISA'
+        cardNumber:
+          type: string
+          example: 'XXXX-XXXX-XXXX-1111'
+        cardHolder:
+          type: string
+        cardExpirationMonth:
+          type: string
+          example: '8'
+        cardExpirationYear:
+          type: string
+          example: '2018'
+
+    Payment:
+      type: object
+      required:
+        - amount
+        - processorId
+      properties:
+        amount:
+          type: string
+          example: '45.27'
+        processorId:
+          type: string
+          enum: [
+            BRAINTREE_CREDIT, BRAINTREE_PAYPAL, KLARNA_PAYMENTS, PSP_CARD, BASIC_LOYALTY_POINTS, BASIC_GIFT_CERTIFICATE, AMAZON_PAY,
+            PCI_PAL, AFTERPAY_CREDIT, Adyen_Component, ZERO_CHECKOUT, Adyen, APPLE_PAY, GOOGLE_PAY, CLEARPAY
+          ]
+          example: 'Adyen_Component'
+        transactionId:
+          type: string
+          example: '882604590085121E'
+        cardType:
+          type: string
+          enum: ['AMEX']
+          example: 'AMEX'
+        creditCard:
+          $ref: '#/components/schemas/PaymentMethodCreditCard'
+        braintree:
+          type: object
+          required:
+            - fraudRiskData
+            - token
+            - braintree3dSecureStatus
+          properties:
+            fraudRiskData:
+              type: string
+            paymentStatus:
+              type: string
+            is3dSecureRequired:
+              type: boolean
+            braintree3dSecureStatus:
+              type: string
+            token:
+              type: string
+            cardType:
+              type: string
+              example: 'VISA'
+            cardNumber:
+              type: string
+              example: 'XXXX-XXXX-XXXX-1111'
+            cardHolder:
+              type: string
+            cardExpirationMonth:
+              type: string
+              example: '8'
+            cardExpirationYear:
+              type: string
+              example: '2018'
+        klarna:
+          type: object
+          required:
+            - paymentCategoryID
+            - paymentCategoryName
+            - fraudStatus
+            - isVCN
+            - orderID
+          properties:
+            paymentCategoryID:
+              type: string
+            paymentCategoryName:
+              type: string
+            fraudStatus:
+              type: string
+            isVCN:
+              type: boolean
+            orderID:
+              type: string
+        giftCertificate:
+          type: object
+          required:
+            - giftcertificateId
+          properties:
+            giftcertificateId:
+              type: string
+        loyalty:
+          type: object
+          required:
+            - giftcertificateId
+          properties:
+            giftcertificateId:
+              type: string
+        amazonPay:
+          type: object
+          properties:
+            amazonPayPaymentDescriptor:
+              type: string
+            amazonPayChargeId:
+              type: string
+            amazonPayChargePermissionId:
+              type: string
+            amazonPayChargePermissionState:
+              type: string
+            amazonPayChargeState:
+              type: string
+            amazonPayCheckoutSessionId:
+              type: string
+            amazonPayCheckoutSessionState:
+              type: string
+        pcipal:
+          type: object
+          properties:
+            braintreePaymentMethodToken:
+              type: string
+            pciWebID:
+              type: string
+            pciKey:
+              type: string
+            pciSessionID:
+              type: string
+            pciAvsPostcode:
+              type: string
+            pciAvsAddress:
+              type: string
+            braintreePaymentStatus:
+              type: string
+        afterpay:
+          type: object
+          properties:
+            apDirectPaymentStatus:
+              type: string
+              example:
+            apInitialStatus:
+              type: string
+              example:
+            apPaymentID:
+              type: string
+              example:
+            apPaymentMode:
+              type: string
+              example:
+            apToken:
+              type: string
+              example:
+            apIsAfterpayOrder:
+              type: boolean
+              example: true
+        adyen:
+          type: object
+          properties:
+            pspReference:
+              type: string
+              example: '882604590085121E'
+        zeroCheckout:
+          type: object
+          properties:
+            paymentMethod:
+              type: string
+
+    CommonTotalProperties:
+      type: object
+      properties:
+        netPrice:
+          type: string
+          example: '35.28'
+        grossPrice:
+          type: string
+          example: '35.28'
+        tax:
+          type: string
+          example: '0.00'
+
+    CommonTotals:
+      type: object
+      required:
+        - merchandizeTotal
+        - adjustedMerchandizeTotal
+        - shippingTotal
+        - adjustedShippingTotal
+      properties:
+        merchandizeTotal:
+          allOf:
+            - $ref: '#/components/schemas/CommonTotalProperties'
+        adjustedMerchandizeTotal:
+          allOf:
+              - $ref: '#/components/schemas/CommonTotalProperties'
+        shippingTotal:
+          allOf:
+              - $ref: '#/components/schemas/CommonTotalProperties'
+        adjustedShippingTotal:
+          allOf:
+              - $ref: '#/components/schemas/CommonTotalProperties'
+
+    CommonLineItem:
+      type: object
+      properties:
+        grossPrice:
+          type: string
+          example: '15.29'
+        taxBasis:
+          type: string
+          example: '15.29'
+
+    PriceAdjustment:
+      properties:
+        netPrice:
+          type: string
+          example: '-138.60'
+        tax:
+          type: string
+          example: '-6.93'
+        grossPrice:
+          type: string
+          example: '-145.53'
+        basePrice:
+          type: string
+          example: '-138.60'
+        lineitemText:
+          type: string
+          example: '20%offOrderAmountOver200'
+        taxBasis:
+          type: string
+          example: '-138.60'
+        promotionId:
+          type: string
+          example: 'PromotionTest_20%offOrderAmountOver200'
+        campaignId:
+          type: string
+          example: 'PromotionTests'
+        promoName:
+          type: string
+          example: 'Some pretty name, not sure what this is for, but must be important as it came from a custom attribute'
+
+    Address:
+      type: object
+      properties:
+        firstName:
+          type: string
+          maxLength: 255
+          example: 'Jason'
+        lastName:
+          type: string
+          maxLength: 255
+          example: 'Bourne'
+        address1:
+          type: string
+          maxLength: 255
+          example: '104 rue du Jardin'
+        address2:
+          type: string
+          maxLength: 255
+          example: 'Somewhere'
+        address3:
+          type: string
+          maxLength: 255
+          example: 'far away'
+        stateCode:
+          type: string
+          example: 'ME'
+          maxLength: 255
+        city:
+          type: string
+          example: 'Paris'
+          maxLength: 255
+        postalCode:
+          type: string
+          example: '75005'
+          maxLength: 255
+        countryCode:
+          type: string
+          example: 'FR'
+          maxLength: 50
+        phone:
+          type: string
+          maxLength: 50
+    BillingAddress:
+      allOf:
+        - $ref: '#/components/schemas/Address'
+        - type: object
+          required:
+            - lastName
+            - countryCode
+
+    ErrorResponse:
+      type: object
+      description: Error response type, adhering to the bare essentials of RFC7807
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          example: 'required.openapi.validation'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorObject'
+
+    ErrorObject:
+      type: object
+      required:
+      - path
+      - message
+      properties:
+        path:
+          type: string
+          example: .body.siteId
+        message:
+          type: string
+          example: should have required property 'siteId'
+        errorCode:
+          type: string
+          example: required.openapi.validation

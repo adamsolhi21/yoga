@@ -1,0 +1,537 @@
+html { scroll-behavior: smooth; }
+
+@media (max-width: 1055px) and (min-width: 320px) {
+  .body {
+    align-items: center;
+  }
+   
+.image {
+  height: 700px;
+  overflow: hidden;
+}
+
+.advert {
+  overflow: hidden;
+  float: left;
+  margin-left: 125px;
+  margin-top: 20px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+}
+
+  .text {
+    animation: fadeIn 15s;
+    text-align: left!important;
+  }
+
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+}
+
+.bi-arrow-up-short {
+  color: #ffffff;
+}
+a {
+  color: #ffb727;
+  text-decoration: none;
+}
+
+div a {
+  text-decoration: none;
+  color: #000;
+}
+
+div a :hover {
+  text-decoration: none;
+  color: #ffc85a;
+}
+a:hover {
+  color: #ffc85a;
+  text-decoration: none;
+}
+
+h1, h2, h3, h5, h6 {
+  font-family: "satisfy", sans-serif!important;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.h2Logo {
+  font-family: 'Sukar', sans-serif;
+  color: black!important;
+}
+
+h4 {
+  color:#ffb727;
+
+}
+
+h5 {
+  color: #ffc85a;
+}
+
+.fontH {
+  font-family: Helvetica!important;
+  font-size: 14px;
+  font-weight: 400;
+}
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+
+#header.header-transparent {
+  background: transparent;
+}
+
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: #fff;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+nav.transparent {
+  background-color: transparent;
+}
+
+nav.solid {
+  background-color: #fff;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-left: 2rem;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.hamburger .bar {
+  height: 3px;
+  width: 25px;
+  background-color: #000;
+  margin: 4px 0;
+  transition: 0.3s ease;
+}
+
+/* Media query for tablets and mobile devices */
+@media (max-width: 768px) {
+  .nav-links {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  @media (max-width: 550px) {
+   .bookbut {
+display: none;
+  }
+}
+
+  .nav-links li {
+      margin: 1.5rem 0;
+  }
+
+  .hamburger {
+      display: flex;
+  }
+}
+
+.eventrow{
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    /* margin-right: calc(-.5* var(--bs-gutter-x)); */
+    /* margin-left: calc(-.5* var(--bs-gutter-x)); */
+}
+
+
+/* Style for when the hamburger menu is active (turns into an X) */
+.hamburger.toggle .bar:nth-child(1) {
+  transform: rotate(-45deg) translate(-10px, 6px);
+}
+
+.hamburger.toggle .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.toggle .bar:nth-child(3) {
+  transform: rotate(45deg) translate(-8px, -6px);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+      display: none;
+      position: absolute;
+      top: 0px;
+      left: 0;
+      width: 100%;
+      background-color: #fff;
+      flex-direction: column;
+      align-items: center;
+  }
+}
+
+/* Toggle active class for the hamburger menu */
+.nav-active {
+  display: flex !important;
+  
+}
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+#hero {
+  height: 150vh;
+  background: url("https://storage.googleapis.com/www.yogawithceleste.co.uk/YogiCeleste.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  
+}
+@media (max-width: 666px) {
+  #hero {
+    object-fit: cover;
+    background-position-x: -450px;
+    background-repeat: no-repeat;
+  }
+  }
+
+.fullwidthimage {
+  height: 100%;
+  background: url("https://storage.googleapis.com/yogawithceleste.co.uk/IMG_09040.gif");
+  background-size: cover;
+  position: relative;
+  --background-position-x: -600px!important;  
+  background-repeat:no-repeat;
+}
+
+@media (min-width: 250px) and (max-width: 666px) {
+  .fullwidthimage {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      background-position-x: -430px!important;
+      background-repeat: no-repeat;
+      position: relative;
+  }
+ }
+
+#hero:before {
+  content: "";
+  background: rgba(0, 0, 0, 0);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+#hero .hero-container {
+  position: absolute;
+  bottom: 190px;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 15px;
+}
+#hero h1 {
+  /* margin: 10px 0 10px 0; */
+  font-size: 64px;
+  font-family: "Satisfy", serif;
+  color: #fff;
+  /* margin:  50px 0 0; */
+}
+#hero h2 {
+  color: #eee;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+#hero .btn-scroll {
+  transition: 0.4s;
+  color: rgba(255, 255, 255, 0.6);
+  animation: up-down 1s ease-in-out infinite alternate-reverse both;
+}
+#hero .btn-scroll i {
+  font-size: 48px;
+}
+#hero .btn-scroll:hover {
+  color: #ffb727;
+}
+
+@media (max-width: 575px) {
+  #hero h1 {
+    font-size: 40px;
+    line-height: 1.5;
+    margin-bottom: 50px;
+      }
+  }
+  #hero h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}
+
+@-webkit-keyframes up-down {
+  0% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+    img {
+      max-width: 100%;
+      max-height: 100%;
+     }
+ 
+.wrapper {
+  min-width: 150px;
+  column-count: 2;
+  column-gap: 20px;
+  padding: 30px;
+    letter-spacing: 0x;
+}
+
+@media (max-width: 500px) {
+  .wrapper {
+    
+    column-count: 1;
+    column-gap: 0;
+    padding: 10px;
+  }
+  }
+  
+p {
+  line-height: 1.6; 
+  line-break: loose;
+  font-family: Helvetica;
+  text-align: justify;
+  margin: 0;
+  font-size: 14px;
+}
+
+.stroud-yoga {
+  background-image: url("yoga-stroud.jpeg" );
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  filter: grayscale(90%);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 3px
+ 
+ }
+ .stroud-yoga-studio {
+  background-image: url("Yoga_studio_nailsworth.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  filter: grayscale(90%);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 3px
+ }
+
+.address {
+  font-family: var(--bs-font-sans-serif);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+}
+
+.star {
+  float: left;
+  width: 250px;
+  shape-outside: url(https://directory.yogaallianceprofessionals.org/yoga-teacher/celeste-sangster?from=badge);
+  shape-margin:20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 500px) and (min-width: 100px) {
+  .star {
+    align-items: center;
+    width: 500px;
+  }
+  }
+
+  form {
+max-width: 800px;
+align-items: center;
+
+margin-left: auto;
+margin-right: auto;
+  }
+
+  @media (max-width: 666px) {
+    .yogaInStroud{
+    justify-content: center;
+  }
+  }
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  background-size: cover;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  padding: 30px 0;
+  position: relative;
+  padding-top: 20px;
+}
+#footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+#footer .container {
+  position: relative;
+}
+#footer h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  font-family: "Satisfy", serif;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+#footer p {
+  font-size: 15;
+  font-style: italic;
+  padding: 0;
+  margin: 0 0 40px 0;
+  justify-content: center;
+}
+#footer .copyright {
+  margin: 0 0 5px 0;
+  justify-content: center;
+}
+
+.fcf-body {
+  font-family: -apple-system, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #0000ff;
+  text-align: left;
+}
+
+.alink{
+  color: #ffffff!important;
+  text-decoration: none;
+}
+
+.contact-margin {
+  margin-top: 150px;
+}
+
+.cfont {
+font-family: satisfy;
+}
+
+.cfont2 {
+  font-family: Arial, Helvetica, sans-serif;
+  }
+
+  body {
+    
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Open Sans", sans-serif;
+}
+.content {
+    padding-bottom: 50px; 
+    flex:1;
+}
+
+footer {
+    background-color: #000000;
+    color: rgb(8, 8, 8);
+    height: 100px;
+    padding: 10px;
+}
+
+footer h2 {
+  color: #ffffff;
+  font-family: satisfy;
+}
+/*23:52*/
