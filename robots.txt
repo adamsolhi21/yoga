@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /test/
+
+# Sitemap
+Sitemap: https://www.yogawithceleste.co.uk/sitemap.xml
